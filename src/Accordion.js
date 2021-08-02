@@ -32,6 +32,7 @@ class Accordion extends React.Component {
                         target="_blank"
                         href={cur.link}
                         key={i}
+                        rel="noreferrer"
                       >
                         <h5 className="text-start fw-light lh-lg ">
                           {cur.name}

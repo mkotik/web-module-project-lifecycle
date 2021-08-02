@@ -9,6 +9,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      searchInput: "",
+      user: "mkotik",
       name: "",
       img: "",
       bio: "",
@@ -17,7 +19,7 @@ class App extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("https://api.github.com/users/mkotik")
+      .get(`https://api.github.com/users/${this.state.user}`)
       .then((res) => {
         console.log(res.data);
         this.setState({
@@ -30,7 +32,7 @@ class App extends React.Component {
       .catch((err) => console.log(err));
 
     axios
-      .get("https://api.github.com/users/mkotik/repos")
+      .get(`https://api.github.com/users/${this.state.user}/repos`)
       .then((res) => {
         console.log(res.data);
         res.data.forEach((cur) => {
@@ -45,6 +47,7 @@ class App extends React.Component {
       })
       .catch((err) => console.log(err));
   }
+
   render() {
     return (
       <div className="App">

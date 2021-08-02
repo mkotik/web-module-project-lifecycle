@@ -18,8 +18,8 @@ class Card extends React.Component {
             </div>
             <div className="col-md-8">
               <div className="card-body">
-                <h5 className="card-title">{this.props.name}</h5>
-                <p>{this.props.bio}</p>
+                <h5 className="card-title text-md-start">{this.props.name}</h5>
+                <p className="mt-4 text-md-start">{this.props.bio}</p>
               </div>
             </div>
           </div>
