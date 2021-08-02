@@ -1,4 +1,5 @@
 import React from "react";
+import Accordion from "./Accordion";
 
 class Card extends React.Component {
   constructor() {
@@ -22,6 +23,7 @@ class Card extends React.Component {
               </div>
             </div>
           </div>
+          <Accordion repos={this.props.repos} />
         </div>
       </div>
     );

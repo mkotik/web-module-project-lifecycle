@@ -12,6 +12,7 @@ class App extends React.Component {
       name: "",
       img: "",
       bio: "",
+      repos: [],
     };
   }
   componentDidMount() {
@@ -27,6 +28,22 @@ class App extends React.Component {
         });
       })
       .catch((err) => console.log(err));
+
+    axios
+      .get("https://api.github.com/users/mkotik/repos")
+      .then((res) => {
+        console.log(res.data);
+        res.data.forEach((cur) => {
+          const name = cur.name;
+          const link = cur.html_url;
+          this.setState({
+            ...this.state,
+            repos: [...this.state.repos, { name: name, link: link }],
+          });
+        });
+        console.log(this.state);
+      })
+      .catch((err) => console.log(err));
   }
   render() {
     return (
@@ -36,6 +53,7 @@ class App extends React.Component {
           name={this.state.name}
           img={this.state.img}
           bio={this.state.bio}
+          repos={this.state.repos}
         />
       </div>
     );
