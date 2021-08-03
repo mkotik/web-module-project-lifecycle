@@ -21,7 +21,6 @@ class App extends React.Component {
     axios
       .get(`https://api.github.com/users/${this.state.user}`)
       .then((res) => {
-        console.log(res.data);
         this.setState({
           ...this.state,
           name: res.data.name,
@@ -34,7 +33,6 @@ class App extends React.Component {
     axios
       .get(`https://api.github.com/users/${this.state.user}/repos`)
       .then((res) => {
-        console.log(res.data);
         res.data.forEach((cur) => {
           const name = cur.name;
           const link = cur.html_url;
@@ -43,15 +41,63 @@ class App extends React.Component {
             repos: [...this.state.repos, { name: name, link: link }],
           });
         });
-        console.log(this.state);
       })
       .catch((err) => console.log(err));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.user !== this.state.user) {
+      axios
+        .get(`https://api.github.com/users/${this.state.user}`)
+        .then((res) => {
+          this.setState({
+            ...this.state,
+            name: res.data.name,
+            img: res.data.avatar_url,
+            bio: res.data.bio,
+          });
+        })
+        .catch((err) => console.log(err));
+
+      axios
+        .get(`https://api.github.com/users/${this.state.user}/repos`)
+        .then((res) => {
+          res.data.forEach((cur) => {
+            const name = cur.name;
+            const link = cur.html_url;
+            this.setState({
+              ...this.state,
+              repos: [...this.state.repos, { name: name, link: link }],
+            });
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+
+  onSubmit = () => {
+    this.setState({
+      ...this.state,
+      user: this.state.searchInput,
+      repos: [],
+      searchInput: "",
+    });
+    console.log(this.state);
+  };
+
+  onChange = (e) => {
+    const value = e.target.value;
+    this.setState({
+      ...this.state,
+      searchInput: value,
+    });
+    console.log(this.state);
+  };
+
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header onSubmit={this.onSubmit} onChange={this.onChange} />
         <Card
           name={this.state.name}
           img={this.state.img}

@@ -8,7 +8,6 @@ class Card extends React.Component {
   }
 
   render() {
-    console.log("rendered");
     return (
       <div className="m-2">
         <div className="bg-light card mb-3">
